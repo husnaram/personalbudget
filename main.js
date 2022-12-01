@@ -6,6 +6,17 @@ dotenv.config();
 const port = process.env.PORT;
 const app = express();
 
-app.get("/", (req, res) => res.send("Hello, Worl"));
+// Parsing application/json
+app.use(express.json())
+
+app.get("/", (req, res) => res.send("Hello, World"));
+app.post("/envelopes", (req, res) => {
+
+	res.status(201).json({
+		"code": 201,
+		"status": "suceess",
+		"message": "Envelope has created"
+	})
+})
 
 app.listen(port, () => console.log(`⚡️[server]: Server is running at https://localhost:${port}`));
