@@ -75,5 +75,27 @@ app.get("/envelopes/:id", (req, res) => {
 			data
 		})
 })
+app.patch("/envelopes/:id", (req, res) => {
+	const { id } = req.params;
+	const { title, budget } = req.body;
+
+	const envelopeIndex = global.envelopes.findIndex(elem => elem.id === id);
+
+	if (Boolean(title)) {
+		global.envelopes[envelopeIndex].title = title;
+	} else if (Boolean(budget)) {
+		global.envelopes[envelopeIndex].budget = budget;
+	}
+
+	const data = global.envelopes.find(elem => elem.id === id);
+
+	res
+		.status(206)
+		.json({
+			"suceess": true,
+			"message": "Success updated an envelope",
+			data
+		})
+});
 
 app.listen(port, () => console.log(`⚡️[server]: Server is running at https://localhost:${port}`));
