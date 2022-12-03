@@ -59,7 +59,19 @@ app.get("/envelopes", (req, res) => {
 		.status(200)
 		.json({
 			"suceess": true,
-			"message": "Success to getting envelopes",
+			"message": "Success to getting all envelopes",
+			data
+		})
+})
+app.get("/envelopes/:id", (req, res) => {
+	const { id } = req.params;
+	const data = global.envelopes.find(elem => elem.id === id);
+
+	res
+		.status(200)
+		.json({
+			"suceess": true,
+			"message": "Success to getting an envelope",
 			data
 		})
 })
