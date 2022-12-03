@@ -25,10 +25,8 @@ const createEnvelopeSchema = Joi.object({
 		.required()
 });
 
-// Global variable
-global.id;
-global.title;
-global.budget;
+// Initialization Envelopes global var
+global.envelopes = [];
 
 // Routes
 app.get("/", (req, res) => res.send("Hello, World"));
@@ -38,7 +36,13 @@ app.post("/envelopes", validate(createEnvelopeSchema), (req, res) => {
 		id: uuidv4(),
 		title,
 		budget
-	}
+	};
+
+	global.envelopes.push({
+		id: data.id,
+		title: data.title,
+		budget: data.budget
+	});
 
 	res
 		.status(201)
@@ -46,14 +50,10 @@ app.post("/envelopes", validate(createEnvelopeSchema), (req, res) => {
 			"suceess": true,
 			"message": "Envelope has created",
 			data
-		})
+		});
 });
 app.get("/envelopes", (req, res) => {
-	const data = {
-		id,
-		title,
-		budget
-	}
+	const data = global.envelopes;
 
 	res
 		.status(200)
